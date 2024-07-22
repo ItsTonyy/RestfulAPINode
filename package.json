@@ -10,7 +10,6 @@
   "author": "Tony Terra Nova",
   "license": "ISC",
   "description": "RestfulAPI with fastify, prisma, zod and typescript!",
-  "type": "module",
   "devDependencies": {
     "@types/node": "^20.14.11",
     "ts-node": "^10.9.2",
