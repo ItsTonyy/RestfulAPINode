@@ -18,6 +18,16 @@ export async function findUserByEmail(email: string) {
   return prisma.user.findUnique({
     where: {
       email,
+    },
+  });
+}
+
+export async function findUsers() {
+  return prisma.user.findMany({
+    select: {
+      email: true,
+      name: true,
+      id: true,
     }
   });
 }

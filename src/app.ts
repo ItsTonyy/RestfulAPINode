@@ -8,11 +8,17 @@ export const fastify = Fastify({
   logger: true,
 });
 
+declare module "fastify" {
+  export interface FastifyInstance {
+    authenticate: any
+  }
+}
+
 fastify.register(fastifyJwt, {
   secret: 'ewireopfiugfhjcnvxqweptorgnvbiopwerj',
 });
 
-fastify.decorate('auth', async (request: FastifyRequest, reply: FastifyReply) => {
+fastify.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     await request.jwtVerify();
   } catch (error) {
