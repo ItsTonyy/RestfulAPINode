@@ -4,7 +4,6 @@ import { $ref } from "./product.schema";
 
 async function productRoutes(server: FastifyInstance) {
   server.post('/', {
-    preHandler: [server.authenticate],
     schema: {
       body: $ref('createProductSchema'),
       response: {
@@ -20,6 +19,8 @@ async function productRoutes(server: FastifyInstance) {
       }
     }
   }, getProductsHandler)
+
+  //server.delete('/', {}, deleteProductHandler)
 }
 
 export default productRoutes

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { createUser, findUserByEmail } from './user.service';
+import { createUser, deleteUser, findUserByEmail } from './user.service';
 import { createUserInput, loginInput } from './user.schema';
 import { findUsers } from './user.service';
 import { verifyPassword } from '../../utils/hash';
@@ -64,4 +64,12 @@ export async function getUsersHandler() {
   const users = await findUsers();
 
   return users
+}
+
+export async function deleteUserHandler(request: FastifyRequest, reply: FastifyReply) {
+  const { id } = request.params;
+
+  const user = await deleteUser(id) 
+
+  return reply.code(204).send({message: `user with id ${id} has been removed`})
 }

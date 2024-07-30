@@ -6,6 +6,7 @@ import productRoutes from './modules/product/product.route';
 import { userSchemas } from './modules/user/user.schema';
 import { productSchemas } from './modules/product/product.schema';
 
+
 export const fastify = Fastify({
   logger: true,
 });
