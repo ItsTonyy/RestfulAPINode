@@ -37,13 +37,20 @@ async function userRoutes(server: FastifyInstance) {
     getUsersHandler
   );
 
-  server.delete('/:id', {
-    schema: {
-      response: {
-        200: $ref('deleteResponseSchema')
-      }
-    }
-  }, deleteUserHandler)
+  server.delete(
+    '/:id',
+    {
+      schema: {
+        params: {
+          id: { type: 'number' },
+        },
+        response: {
+          200: $ref('deleteResponseSchema'),
+        },
+      },
+    },
+    deleteUserHandler
+  );
 }
 
 export default userRoutes;

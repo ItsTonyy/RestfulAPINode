@@ -8,7 +8,7 @@ import { productSchemas } from './modules/product/product.schema';
 
 
 export const fastify = Fastify({
-  logger: true,
+  logger: false,
 });
 
 declare module "fastify" {

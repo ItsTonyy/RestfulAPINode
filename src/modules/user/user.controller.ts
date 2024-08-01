@@ -60,8 +60,10 @@ export async function loginHandler(request: FastifyRequest<{
   // respond
 }
 
-export async function getUsersHandler() {
+export async function getUsersHandler(request: FastifyRequest) {
   const users = await findUsers();
+
+  console.log(request.params)
 
   return users
 }
