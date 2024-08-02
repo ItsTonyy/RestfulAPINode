@@ -28,12 +28,23 @@ export async function findUsers() {
       email: true,
       name: true,
       id: true,
-    }
+    },
+  });
+}
+
+export async function findUser(id: number) {
+  return prisma.user.findUnique({
+    where: { id },
   });
 }
 
 export async function deleteUser(id: number) {
   return prisma.user.delete({
-    where: { id }
-  })
+    where: { id },
+    select: {
+      email: true,
+      name: true,
+      id: true,
+    },
+  });
 }

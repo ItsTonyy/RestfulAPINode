@@ -1,5 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { loginHandler, registerUserHandler, getUsersHandler, deleteUserHandler } from './user.controller';
+import {
+  loginHandler,
+  registerUserHandler,
+  getUsersHandler,
+  getUserHandler,
+  deleteUserHandler,
+} from './user.controller';
 import { $ref } from './user.schema';
 
 async function userRoutes(server: FastifyInstance) {
@@ -35,6 +41,18 @@ async function userRoutes(server: FastifyInstance) {
       preHandler: [server.authenticate],
     },
     getUsersHandler
+  );
+
+  server.get(
+    '/:id',
+    {
+      schema: {
+        params: {
+          id: { type: 'number' },
+        },
+      },
+    },
+    getUserHandler
   );
 
   server.delete(
