@@ -5,8 +5,10 @@ import {
   getUsersHandler,
   getUserHandler,
   deleteUserHandler,
+  updateUserHandler,
 } from './user.controller';
 import { $ref } from './user.schema';
+import { Server } from 'http';
 
 async function userRoutes(server: FastifyInstance) {
   server.post(
@@ -69,6 +71,21 @@ async function userRoutes(server: FastifyInstance) {
     },
     deleteUserHandler
   );
+
+  server.put('/:id', 
+    {
+      schema: {
+        params: {
+          id: { type: 'number' },
+        },
+        body: $ref('userUpdateSchema'),
+        response: {
+          201: $ref('deleteResponseSchema'),
+        },
+      },
+    },
+    updateUserHandler
+)
 }
 
 export default userRoutes;

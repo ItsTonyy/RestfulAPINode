@@ -42,6 +42,11 @@ const deleteResponseSchema = z.object({
   message: z.string(),
 })
 
+const userUpdateSchema = z.object({
+  id: z.number(),
+  ...userCore,
+})
+
 export type createUserInput = z.infer<typeof createUserSchema>;
 export type loginInput = z.infer<typeof loginSchema>;
 
@@ -51,5 +56,6 @@ export const { schemas: userSchemas, $ref } = buildJsonSchemas({
   createUserResponseSchema,
   loginSchema,
   loginResponseSchema,
-  deleteResponseSchema
+  deleteResponseSchema,
+  userUpdateSchema
 });

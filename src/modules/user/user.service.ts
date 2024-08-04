@@ -1,6 +1,8 @@
 import { hashPassword } from '../../utils/hash';
+import { userBody } from '../../utils/interfaces';
 import prisma from '../../utils/prisma';
 import { createUserInput } from './user.schema';
+
 
 export async function createUser(input: createUserInput) {
   const { password, ...rest } = input;
@@ -35,16 +37,27 @@ export async function findUsers() {
 export async function findUser(id: number) {
   return prisma.user.findUnique({
     where: { id },
-  });
-}
-
-export async function deleteUser(id: number) {
-  return prisma.user.delete({
-    where: { id },
     select: {
       email: true,
       name: true,
       id: true,
     },
   });
+}
+
+export async function deleteUser(id: number) {
+  return prisma.user.delete({
+    where: { id },
+  });
+}
+
+export async function updateUser({id, name, email}: userBody) {
+  return prisma.user.update({
+    where: { id },
+    data: {
+      id,
+      email,
+      name
+    }
+  })
 }

@@ -1,9 +1,10 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { createUser, deleteUser, findUser, findUserByEmail } from './user.service';
+import { createUser, deleteUser, findUser, findUserByEmail, updateUser } from './user.service';
 import { createUserInput, loginInput } from './user.schema';
 import { findUsers } from './user.service';
 import { verifyPassword } from '../../utils/hash';
 import { fastify } from '../../app';
+import { userBody } from '../../utils/interfaces';
 
 export async function registerUserHandler(
   request: FastifyRequest<{
@@ -69,7 +70,7 @@ export async function getUsersHandler(request: FastifyRequest) {
   return users;
 }
 
-export async function getUserHandler(request: FastifyRequest) {
+export async function getUserHandler(request: FastifyRequest<{Params: {id: number}}>) {
   const { id } = request.params;
 
   const user = await findUser(id);
@@ -77,10 +78,19 @@ export async function getUserHandler(request: FastifyRequest) {
   return user;
 }
 
-export async function deleteUserHandler(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteUserHandler(request: FastifyRequest<{Params: {id: number}}>, reply: FastifyReply) {
   const { id } = request.params;
 
-  const user = await deleteUser(id);
+  await deleteUser(id);
 
   return reply.code(200).send({ message: `user with id ${id} has been removed` });
+}
+
+export async function updateUserHandler(request: FastifyRequest<{Body: userBody, Params: {id: number}}>, reply: FastifyReply) {
+  const { id } = request.params;
+  const {email, name} = request.body
+
+  await updateUser({id, email, name})
+
+  return reply.code(201).send({message: `user with id ${id} has been updated`})
 }
